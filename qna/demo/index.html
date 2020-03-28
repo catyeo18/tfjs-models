@@ -21,36 +21,20 @@ limitations under the License.
 
 <body>
   <div>
-    <h3>Context (you can paste your own content in the text area)</h3>
-    <textarea id='context' rows="30" cols="120">Nikola Tesla (/ˈtɛslə/;[2] Serbo-Croatian: [nǐkola têsla]; Serbian Cyrillic: Никола Тесла;[a] 10
-      July 1856 – 7 January 1943) was a Serbian-American[4][5][6] inventor, electrical engineer, mechanical engineer,
-      and futurist who is best known for his contributions to the design of the modern alternating current (AC)
-      electricity supply system.[7] <br/>
-
-      Born and raised in the Austrian Empire, Tesla studied engineering and physics in the 1870s without receiving a
-      degree, and gained practical experience in the early 1880s working in telephony and at Continental Edison in the
-      new electric power industry. He emigrated in 1884 to the United States, where he would become a naturalized
-      citizen. He worked for a short time at the Edison Machine Works in New York City before he struck out on his own.
-      With the help of partners to finance and market his ideas, Tesla set up laboratories and companies in New York to
-      develop a range of electrical and mechanical devices. His alternating current (AC) induction motor and related
-      polyphase AC patents, licensed by Westinghouse Electric in 1888, earned him a considerable amount of money and
-      became the cornerstone of the polyphase system which that company would eventually market.<br/>
-
-      Attempting to develop inventions he could patent and market, Tesla conducted a range of experiments with
-      mechanical oscillators/generators, electrical discharge tubes, and early X-ray imaging. He also built a
-      wireless-controlled boat, one of the first ever exhibited. Tesla became well known as an inventor and would
-      demonstrate his achievements to celebrities and wealthy patrons at his lab, and was noted for his showmanship at
-      public lectures. Throughout the 1890s, Tesla pursued his ideas for wireless lighting and worldwide wireless
-      electric power distribution in his high-voltage, high-frequency power experiments in New York and Colorado
-      Springs. In 1893, he made pronouncements on the possibility of wireless communication with his devices. Tesla
-      tried to put these ideas to practical use in his unfinished Wardenclyffe Tower project, an intercontinental
-      wireless communication and power transmitter, but ran out of funding before he could complete it.[8]<br/>
-
-      After Wardenclyffe, Tesla experimented with a series of inventions in the 1910s and 1920s with varying degrees of
-      success. Having spent most of his money, Tesla lived in a series of New York hotels, leaving behind unpaid bills.
-      He died in New York City in January 1943.[9] Tesla's work fell into relative obscurity following his death, until
-      1960, when the General Conference on Weights and Measures named the SI unit of magnetic flux density the tesla in
-      his honor.[10] There has been a resurgence in popular interest in Tesla since the 1990s.[11]</textarea>
+    <h3>Context</h3>
+    <textarea id='context' rows="30" cols="120">
+      Convo is a voice-based system allowing users to develop computer programs by conversing in natural language with a conversational agent. For the user study, the system was designed to support both voice- and text-based conversations. Currently, the system supports three main tasks--(1) program creation, (2) program editing, and (3) system feedback--through natural language.
+      
+      Users interact with the system through the VUI. The VUI receives and transcribes voice input into text and sends it to the next module. The ASR is handled by Google's Cloud Speech-To-Text API service. The transcribed output is sent to a WebSocket server where the NLU and post-processing occurs, and the DM generates appropriate responses. Responses are voiced back to users using Google's Speech Synthesis API.
+      
+      The second module performs NLU on the input, extracting and recognizing users' intents based on utterances provided by the VUI. The NLU module is syntactically-constrained and uses a regex expression-based semantic parser to determine intent and extract semantic information.
+      
+      The third module is the DM, which is responsible for keeping track of the conversation, goals between users and the system, and the agent state. Agent states include program creation, editing and execution states, and are managed by a finite-state machine.
+      
+      Given information extracted by the NLU, the DM creates a "user goal." The goal contains the user's intent (e.g. intent to create a variable) and necessary actions the system must take to complete the goal. These actions are referred to as "agent goals." For example, when a user wants to create a variable, the DM will ask for a name and an initial value if they weren't originally provided by the user. In this case, the user goal is to create a variable, while the agent goals are to ask for the name and initial value. The latter behavior is commonly known as slot-filling. Completing agent goals leads to various possible changes, including state changes and new additions to the program. The agent goals and state determine the specific response Convo provides after a given user command.
+      
+      The fourth module is the program editor (PE), which is responsible for program-related tasks like editing and execution. The PE interacts with the DM, receiving program-related commands and actions and returning program context and state. During program creation, the editor keeps a program representation in memory. The representation is a list of actions that the agent performs when executing the program, and can be exported to other formats (e.g. JSON, Javascript, Python). During editing, the PE keeps track of the program state, which contains information such as defined variables and the current action.
+    </textarea>
       <h3>Question</h3>
       <input type=text id="question"> <button id="search">Search</button>
       <h3>Answers</h3>
