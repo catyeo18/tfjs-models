@@ -34,6 +34,7 @@
     "typescript": "3.3.3333",
     "yalc": "~1.0.0-pre.21"
   },
+  "type": "module",
   "eslintConfig": {
     "extends": "google",
     "rules": {
